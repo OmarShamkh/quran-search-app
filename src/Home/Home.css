@@ -1,0 +1,60 @@
+/* home.css */
+
+/* Container styles */
+.index-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    height: 100vh;
+    background-color: #ffffff; 
+  }
+  
+  /* Logo styles */
+  .index-logo {
+    width: 400px; 
+    margin-bottom: 10px;
+    margin-top: -90px; 
+  }
+  
+  /* Input container styles */
+  .input-container {
+    display: flex;
+    flex-direction: column; 
+    align-items: center;
+    margin-bottom: 20px; 
+  }
+  
+  /* Input styles */
+  .index-input {
+    width: 200%;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #cccccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+    margin-bottom: 10px; /* Spacing below the input */
+  }
+  
+  /* Button container styles */
+  .button-container {
+    display: flex;
+  }
+  
+  /* Button styles */
+  .index-button {
+    padding: 10px 20px;
+    font-size: 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    background-color: #2178b3; /* Button color */
+    color: white; 
+    margin: 0 5px; 
+  }
+  
+  .index-button:hover {
+    background-color: #2980b9; /* Button color on hover */
+  }
+  

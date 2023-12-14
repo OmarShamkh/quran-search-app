@@ -1,0 +1,47 @@
+/* Header.css */
+
+.app-header {
+    background-color: #333;
+    color: white;
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;    
+  }
+  
+  .app-logo {
+    width: 50px; 
+    height: auto;
+    
+  }
+  
+  .header-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .app-name {
+    margin: 0;
+    margin-left: 80px;
+  }
+  
+  .nav-links {
+    list-style: none;
+    display: flex;
+    gap: 20px;
+  }
+  
+  .nav-links li a {
+    color: white;
+    text-decoration: none;
+    font-size: 18px;
+  }
+  
+  .nav-links li a:hover {
+    border-radius: 3px;
+    background-color: #ddd;
+    color: #333;
+
+  }
+  

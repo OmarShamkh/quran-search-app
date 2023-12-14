@@ -1,0 +1,67 @@
+/* LexicalSearchResult.css */
+.result-container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-top: 5px;
+  direction: rtl;
+}
+
+.result-item {
+  border: 1px solid #ccc;
+  padding: 10px;
+  margin-bottom: 10px;
+  width: 100%;
+  background-color:antiquewhiteك
+}
+
+.result-item h4 {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.result-item p {
+  margin-bottom: 5px;
+}
+
+audio {
+  margin-top: 10px;
+}
+/* LexicalSearchResult.css */
+
+.header {
+  background-color: #f3f3f3;
+  padding: 20px;
+  text-align: center;
+}
+
+
+.highlighted {
+  background-color: yellow;
+  font-weight: bold;
+}
+.pagination {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.pagination-btn {
+  padding: 8px 16px;
+  margin: 0 5px;
+  background-color: #eee;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.pagination-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.pagination-text {
+  margin: 0 10px;
+  font-size: 14px;
+}
