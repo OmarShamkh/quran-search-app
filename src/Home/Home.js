@@ -12,7 +12,7 @@ function Home() {
   return (
     <div className="index-form">
       <form>
-        <img className="index-logo" src="/quran-logo2.png" alt="logo" />
+        <img className="index-logo" src="/quran-logo.png" alt="logo" />
         <div className="input-container">
           <input
             className="index-input"
