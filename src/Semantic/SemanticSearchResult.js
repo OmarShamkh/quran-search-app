@@ -13,7 +13,7 @@ function SemanticSearchResult() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch(`http://localhost:5000/similar-verse/${searchInput}`);
+        const response = await fetch(`https://quran-semantic-api.icycliff-d2b823f1.eastus.azurecontainerapps.io/similar-verse/${searchInput}`);
         if (!response.ok) {
           throw new Error('Failed to fetch data');
         }
