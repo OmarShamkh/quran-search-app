@@ -27,7 +27,7 @@ function About() {
       </p>
       </p>
       <p>
-        <strong>Contact me:</strong>
+        <strong>Contact me: Omar Shamkh </strong>
         <ul className="contact-links">
           <li><a href="mailto:omarshamkh2510@gmail.com" target="_blank" rel="noreferrer">Email</a></li>
           <li><a href="https://www.linkedin.com/in/omarshamkh/" target="_blank" rel="noreferrer">Linkedin</a></li>
