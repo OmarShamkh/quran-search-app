@@ -19,12 +19,18 @@ This web application facilitates Quran searches using both lexical (keyword-base
   ```
   git clone https://github.com/your-username/quran-search-app.git
   ```
+- Navigate to the project folder:
+  ```
   cd quran-search-app
+  ```
+- Run npm
   ```
   npm install
   ```
+- Start The Project:
+  ```
   npm start
-
+  ```
 ## Usage
 - Access the application through your web browser at http://localhost:3000.
 - Enter a search term or concept in the provided input field.
