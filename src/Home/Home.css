@@ -1,6 +1,3 @@
-/* home.css */
-
-/* Container styles */
 .index-form {
     display: flex;
     flex-direction: column;
@@ -11,14 +8,14 @@
     background-color: #ffffff; 
   }
   
-  /* Logo styles */
+
   .index-logo {
-    width: 400px; 
+    width: 300px; 
     margin-bottom: 10px;
     margin-top: -90px; 
   }
   
-  /* Input container styles */
+
   .input-container {
     display: flex;
     flex-direction: column; 
@@ -26,7 +23,7 @@
     margin-bottom: 20px; 
   }
   
-  /* Input styles */
+ 
   .index-input {
     width: 200%;
     padding: 10px;
@@ -34,27 +31,44 @@
     border: 1px solid #cccccc;
     border-radius: 5px;
     box-sizing: border-box;
-    margin-bottom: 10px; /* Spacing below the input */
+    margin-bottom: 10px; 
   }
   
-  /* Button container styles */
+  
   .button-container {
     display: flex;
   }
   
-  /* Button styles */
+  
   .index-button {
     padding: 10px 20px;
     font-size: 20px;
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    background-color: #192e66; /* Button color */
+    background-color: #192e66; 
     color: white; 
     margin: 0 5px; 
   }
   
   .index-button:hover {
-    background-color: #2980b9; /* Button color on hover */
+    background-color: #2980b9; 
   }
-  
+  /* Media query for smaller screens */
+@media (max-width: 767px) {
+  .index-form {
+    padding: 10px; 
+  }
+
+  .index-logo {
+    width: 150px; 
+  }
+
+  .index-input {
+    font-size: 14px; 
+  }
+
+  .index-button {
+    font-size: 16px; 
+  }
+}
