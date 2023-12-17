@@ -2,10 +2,14 @@
 
 This web application facilitates Quran searches using both lexical (keyword-based) and semantic (concept-based) search techniques. It's designed to help users, especially Muslims, navigate and search the Holy Quran more efficiently.
 
+## Website: 
+https://quranicsearch.azurewebsites.net/
+
 ## Features
 
 - **Lexical Search:** Allows users to search for specific words or phrases within the Quranic text.
 - **Semantic Search:** Provides results based on concepts or meanings rather than exact keywords.
+    - Using Quran Semantic Search api : https://quran-semantic-api.icycliff-d2b823f1.eastus.azurecontainerapps.io/similar-verse/
 - **Verse Retrieval:** Displays relevant Quranic verses with accurate Tashkeel.
 - **Pagination:** Supports pagination for easier navigation through search results.
 
