@@ -9,7 +9,7 @@ https://quranicsearch.azurewebsites.net/
 
 - **Lexical Search:** Allows users to search for specific words or phrases within the Quranic text.
 - **Semantic Search:** Provides results based on concepts or meanings rather than exact keywords.
-    - Using Quran Semantic Search api : https://quran-semantic-api.icycliff-d2b823f1.eastus.azurecontainerapps.io/similar-verse/
+    - Using Quran Semantic Search API : https://github.com/OmarShamkh/ask-the-holy-quran/tree/master/backend/src/api/semantic
 - **Verse Retrieval:** Displays relevant Quranic verses with accurate Tashkeel.
 - **Pagination:** Supports pagination for easier navigation through search results.
 
