@@ -10,7 +10,7 @@
   
 
   .index-logo {
-    width: 300px; 
+    width: 400px; 
     margin-bottom: 10px;
     margin-top: -90px; 
   }
@@ -25,7 +25,7 @@
   
  
   .index-input {
-    width: 200%;
+    width: 100%;
     padding: 10px;
     font-size: 16px;
     border: 1px solid #cccccc;
@@ -57,7 +57,7 @@
   /* Media query for smaller screens */
 @media (max-width: 767px) {
   .index-form {
-    padding: 10px; 
+    padding: 20px; 
   }
 
   .index-logo {
@@ -70,5 +70,8 @@
 
   .index-button {
     font-size: 16px; 
+  }
+  .input-container {
+   padding: 5px;
   }
 }
