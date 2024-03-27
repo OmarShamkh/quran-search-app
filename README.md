@@ -40,16 +40,9 @@ https://quranicsearch.azurewebsites.net/
 - Enter a search term or concept in the provided input field.
 - View the search results displayed on the page.
 
-## Improvements
-
-- Ensure mobile responsiveness for a better user experience.
-- Enhance error handling for clearer feedback.
-- Optimize images and styles for faster loading times.
-- Improve pagination design for usability on smaller screens.
-
 ## Contributing
 
-Contributions are welcome! Feel free to fork the repository and submit pull requests.
+Contributions are welcome! improving UI/UX, Feel free to fork the repository and submit pull requests.
 
 ## License
 
