@@ -21,7 +21,7 @@ https://quranicsearch.azurewebsites.net/
 - Clone the repository:
 
   ```
-  git clone https://github.com/your-username/quran-search-app.git
+  git clone https://github.com/OmarShamkh/quran-search-app.git
   ```
 - Navigate to the project folder:
   ```
