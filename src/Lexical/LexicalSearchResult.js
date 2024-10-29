@@ -102,7 +102,7 @@ function LexicalSearchResult() {
               <div key={index} className="result-card">
                 <div className="result-header">
                   <h3>سورة {item.surah}</h3>
-                  <span className="verse-number">آية {item.verseNumber}</span>
+                  <span className="verse-number">آية رقم {item.numberInSurah}</span>
                 </div>
                 <div className="verse-text">
                   <p>{item.verse}</p>

@@ -131,7 +131,7 @@ function SemanticSearchResult() {
                 <div className="result-header">
                   <h3>سورة {result.data.surah}</h3>
                   <div className="verse-info">
-                    <span className="verse-number">آية {result.data.verseNumber}</span>
+                    <span className="verse-number">آية رقم {result.data.numberInSurah}</span>
                     <span className="similarity-score">
                       نسبة تطابق المعنى: {(result.similarity * 100).toFixed(1)}%
                     </span>
