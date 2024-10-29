@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect, useCallback } from 'react';
+import React, { useState, useRef, useEffect, useCallback, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './Home.css';
 
@@ -12,17 +12,18 @@ const Home = () => {
   const searchInputRef = useRef(null);
   const navigate = useNavigate();
 
-  // Arabic and English patterns
-  const arabicPattern = /^[\u0600-\u06FF\s\u064B-\u0652]+$/;
-  const englishPattern = /^[a-zA-Z\s.,'-]+$/;
-
-  const validateArabicText = useCallback((text) => {
-    const commonInvalidPatterns = [
+  // Memoize patterns to prevent recreation on each render
+  const patterns = useMemo(() => ({
+    arabic: /^[\u0600-\u06FF\s\u064B-\u0652]+$/,
+    english: /^[a-zA-Z\s.,'-]+$/,
+    commonInvalid: [
       /([^\u0621-\u063A\u0641-\u064A])\1{2,}/, // Repeated non-Arabic letters
       /\d+/, // Numbers
-    ];
+    ]
+  }), []);
 
-    for (let pattern of commonInvalidPatterns) {
+  const validateArabicText = useCallback((text) => {
+    for (let pattern of patterns.commonInvalid) {
       if (pattern.test(text)) {
         setValidationMessage('الرجاء إدخال كلمات عربية صحيحة');
         setIsValid(false);
@@ -33,10 +34,9 @@ const Home = () => {
     setValidationMessage('');
     setIsValid(true);
     return true;
-  }, []);
+  }, [patterns.commonInvalid]);
 
   const validateInput = useCallback((value) => {
-    // Remove extra spaces and normalize Arabic characters
     const normalizedValue = value.trim().replace(/\s+/g, ' ');
     
     if (normalizedValue.length < 2) {
@@ -45,23 +45,20 @@ const Home = () => {
       return false;
     }
 
-    // Check if input is Arabic
-    if (arabicPattern.test(normalizedValue)) {
+    if (patterns.arabic.test(normalizedValue)) {
       return validateArabicText(normalizedValue);
     }
-    // Check if input is English
-    else if (englishPattern.test(normalizedValue)) {
+    else if (patterns.english.test(normalizedValue)) {
       setValidationMessage('الرجاء الكتابة باللغة العربية');
       setIsValid(false);
       return false;
     }
-    // Invalid characters
     else {
       setValidationMessage('الرجاء إدخال نص صحيح باللغة العربية');
       setIsValid(false);
       return false;
     }
-  }, [validateArabicText]);
+  }, [patterns.arabic, patterns.english, validateArabicText]);
 
   useEffect(() => {
     const savedSearches = localStorage.getItem('recentSearches');
@@ -70,7 +67,6 @@ const Home = () => {
     }
   }, []);
 
-  // Debounced input handler
   useEffect(() => {
     const timer = setTimeout(() => {
       if (searchInput) {
