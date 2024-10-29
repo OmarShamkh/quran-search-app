@@ -1,7 +1,4 @@
-# Docs for the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
-# More GitHub Actions for Azure: https://github.com/Azure/actions
-
-name: Build and deploy container app to Azure Web App - QuranicSearch
+name: Build and deploy to Azure Web App - QuranicSearch
 
 on:
   push:
@@ -10,43 +7,30 @@ on:
   workflow_dispatch:
 
 jobs:
-  build:
+  build-and-deploy:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4
+    - uses: actions/checkout@v2
 
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v2
+    - name: Set up Node.js
+      uses: actions/setup-node@v1
+      with:
+        node-version: '18.x'
 
-      - name: Log in to container registry
-        uses: docker/login-action@v2
-        with:
-          registry: https://quran.azurecr.io/
-          username: ${{ secrets.AzureAppService_ContainerUsername_a8821f76001f4af1becda1888a2ae3fb }}
-          password: ${{ secrets.AzureAppService_ContainerPassword_2396884de4dd4913ae58afad5dcc8f49 }}
+    - name: Install dependencies
+      run: npm install
 
-      - name: Build and push container image to registry
-        uses: docker/build-push-action@v3
-        with:
-          context: .
-          push: true
-          tags: quran.azurecr.io/${{ secrets.AzureAppService_ContainerUsername_a8821f76001f4af1becda1888a2ae3fb }}/quran-app:${{ github.sha }}
-          file: ./Dockerfile
+    - name: Build React app
+      run: npm run build
+      env:
+        CI: false # Prevents treats warnings as errors
 
-    deploy:
-      runs-on: ubuntu-latest
-      needs: build
-      environment:
-        name: 'Production'
-        url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
-
-      steps:
-        - name: Deploy to Azure Web App
-          id: deploy-to-webapp
-          uses: azure/webapps-deploy@v2
-          with:
-            app-name: 'QuranicSearch'
-            slot-name: 'Production'
-            publish-profile: ${{ secrets.AzureAppService_PublishProfile_813587dc92184275b7073a877585e7ee }}
-            images: 'quran.azurecr.io/${{ secrets.AzureAppService_ContainerUsername_a8821f76001f4af1becda1888a2ae3fb }}/quran-app:${{ github.sha }}'
+    - name: Deploy to Azure Web App
+      id: deploy-to-webapp
+      uses: azure/webapps-deploy@v2
+      with:
+        app-name: 'QuranicSearch'
+        slot-name: 'production'
+        publish-profile: ${{ secrets.AzureAppService_PublishProfile_a1889ef9a2dc4cc0ba004d87de12a4e9 }}
+        package: build  # React builds to the 'build' directory
