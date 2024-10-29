@@ -1,77 +1,320 @@
-.index-form {
-    display: flex;
+.home {
+  min-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  padding-top: 0; /* Removed padding-top */
+  background: linear-gradient(
+    135deg,
+    var(--background-light) 0%,
+    var(--background-light) 100%
+  );
+}
+
+.islamic-pattern-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: radial-gradient(
+    circle at 50% 50%,
+    var(--pattern-light) 20%,
+    transparent 20.5%,
+    transparent 49.5%,
+    var(--pattern-light) 50%
+  );
+  background-size: 20px 20px;
+  opacity: 0.1;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.home-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center; /* Changed to center */
+  padding: 1rem 0.75rem; /* Reduced top padding */
+  max-width: calc(var(--container-max-width) * 0.9);
+  margin: 0 auto;
+  width: 100%;
+  z-index: 2;
+  position: relative;
+}
+
+/* Logo Section */
+.logo-section {
+  text-align: center;
+  margin-bottom: 2rem;
+  animation: fadeIn 1s ease-out;
+  margin-top: 0; /* Added to ensure no top margin */
+}
+
+.logo-container {
+  position: relative;
+  width: 150px;
+  height: 150px;
+  margin: 0 auto 1.5rem;
+}
+
+.logo-ring {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border: 2px solid var(--primary-gold);
+  border-radius: 50%;
+  animation: rotate 20s linear infinite;
+}
+
+.main-logo {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 120px;
+  height: 120px;
+  background: var(--background-light);
+  border: 2px solid var(--primary-gold);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: var(--shadow-soft);
+}
+
+.logo-arabic {
+  color: var(--primary-gold);
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.quran-verse {
+  font-size: 1.5rem;
+  color: var(--secondary-green);
+  margin: .2rem 0;
+  line-height: 1.6;
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeInUp 0.8s ease forwards 0.5s;
+}
+
+/* Search Section */
+.search-section {
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.search-container {
+  margin-bottom: 1.2rem;
+}
+
+.search-form {
+  display: flex;
+  gap: 0.75rem;
+  background: var(--background-light);
+  padding: 0.5rem;
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow-medium);
+  border: 1px solid rgba(195, 163, 67, 0.1);
+}
+
+.input-wrapper {
+  flex: 1;
+  position: relative;
+}
+
+.search-input {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: none;
+  background: transparent;
+  font-size: 1rem;
+  color: var(--text-dark);
+}
+
+.search-input::placeholder {
+  color: rgba(44, 62, 80, 0.6);
+}
+
+.search-button {
+  background: var(--primary-gold);
+  border: none;
+  border-radius: 8px;
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all var(--transition-normal);
+}
+
+.search-icon {
+  width: 20px;
+  height: 20px;
+  fill: var(--text-light);
+}
+
+/* Search Options */
+.search-options {
+  display: flex;
+  gap: 0.75rem;
+  justify-content: center;
+  margin-top: 1.5rem;
+}
+
+.option-button {
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: var(--border-radius);
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all var(--transition-normal);
+}
+
+.semantic-button {
+  background: var(--secondary-green);
+  color: var(--text-light);
+}
+
+.lexical-button {
+  background: var(--accent-teal);
+  color: var(--text-light);
+}
+
+/* Recent Searches */
+.recent-searches {
+  margin-top: 2rem;
+  text-align: center;
+}
+
+.recent-searches h3 {
+  color: var(--text-dark);
+  margin-bottom: 0.75rem;
+  font-size: 1.1rem;
+}
+
+.recent-searches-list {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.recent-search-item {
+  background: var(--background-light);
+  border: 1px solid var(--primary-gold);
+  border-radius: 16px;
+  padding: 0.4rem 1rem;
+  font-size: 0.8rem;
+  color: var(--text-dark);
+  cursor: pointer;
+  transition: all var(--transition-normal);
+}
+.validation-message {
+  position: absolute;
+  bottom: -20px;
+  right: 0;
+  font-size: 0.8rem;
+  color: #e74c3c;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.validation-message.show {
+  opacity: 1;
+}
+
+.search-input.error {
+  border: 1px solid #e74c3c;
+}
+
+.search-input.valid {
+  border: 1px solid #2ecc71;
+}
+
+.input-wrapper {
+  position: relative;
+  width: 100%;
+}
+/* Animations */
+@keyframes rotate {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes fadeInUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .logo-container {
+    width: 120px;
+    height: 120px;
+  }
+
+  .main-logo {
+    width: 100px;
+    height: 100px;
+  }
+
+  .logo-arabic {
+    font-size: 1.2rem;
+  }
+
+  .quran-verse {
+    font-size: 1.3rem;
+    padding: 0 0.75rem;
+  }
+
+  .search-form {
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    height: 100vh;
-    background-color: #ffffff; 
   }
-  
 
-  .index-logo {
-    width: 400px; 
-    margin-bottom: 10px;
-    margin-top: -90px; 
-  }
-  
-
-  .input-container {
-    display: flex;
-    flex-direction: column; 
-    align-items: center;
-    margin-bottom: 20px; 
-  }
-  
- 
-  .index-input {
+  .search-button {
     width: 100%;
-    padding: 10px;
-    font-size: 16px;
-    border: 1px solid #cccccc;
-    border-radius: 5px;
-    box-sizing: border-box;
-    margin-bottom: 10px; 
-  }
-  
-  
-  .button-container {
-    display: flex;
-  }
-  
-  
-  .index-button {
-    padding: 10px 20px;
-    font-size: 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    background-color: #192e66; 
-    color: white; 
-    margin: 0 5px; 
-  }
-  
-  .index-button:hover {
-    background-color: #2980b9; 
-  }
-  /* Media query for smaller screens */
-@media (max-width: 767px) {
-  .index-form {
-    padding: 20px; 
+    height: 40px;
   }
 
-  .index-logo {
-    width: 150px; 
+  .search-options {
+    flex-direction: column;
   }
 
-  .index-input {
-    font-size: 14px; 
+  .option-button {
+    width: 100%;
+    padding: 0.6rem 1.25rem;
   }
+}
 
-  .index-button {
-    font-size: 16px; 
-  }
-  .input-container {
-   padding: 5px;
-  }
+/* Hover Effects */
+.search-button:hover:not(:disabled),
+.option-button:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-medium);
+}
+
+.recent-search-item:hover {
+  background: var(--pattern-light);
+  transform: translateY(-1px);
+}
+
+/* Disabled States */
+.search-button:disabled,
+.option-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
 }

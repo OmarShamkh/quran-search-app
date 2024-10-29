@@ -1,55 +1,207 @@
-.App {
-  text-align: center;
+:root {
+  /* Core Colors */
+  --primary-gold: #C3A343;
+  --secondary-green: #1F4F3F;
+  --accent-teal: #207D6E;
+  --background-light: #F8F7F2;
+  --text-dark: #2C3E50;
+  --text-light: #FFFFFF;
+  
+  /* Islamic Pattern Colors */
+  --pattern-light: rgba(195, 163, 67, 0.1);
+  --pattern-dark: rgba(31, 79, 63, 0.1);
+  
+  /* Shadows */
+  --shadow-soft: 0 4px 12px rgba(0, 0, 0, 0.05);
+  --shadow-medium: 0 6px 24px rgba(0, 0, 0, 0.1);
+  
+  /* Transitions */
+  --transition-fast: 0.2s ease;
+  --transition-normal: 0.3s ease;
+  
+  /* Layout */
+  --header-height: 70px;
+  --container-max-width: 1200px;
+  --border-radius: 12px;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+/* Reset & Base Styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-@media (max-width: 767px) {
-  /* Adjustments for mobile devices */
-  .App-logo {
-    height: 30vmin; /* Adjust logo size for smaller screens */
-  }
-  .App-header {
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 20px; /* Add padding for better readability */
-  }
-  .App-link {
-    font-size: 14px; /* Adjust font size for smaller screens */
-  }
+body {
+  font-family: 'Noto Sans Arabic', 'Amiri', sans-serif;
+  background-color: var(--background-light);
+  color: var(--text-dark);
+  direction: rtl;
+  line-height: 1.6;
+  overflow-x: hidden;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
+/* App Container */
+.app-container {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+  position: relative;
+}
+
+/* Islamic Pattern Background */
+.app-container::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: 
+    linear-gradient(30deg, var(--pattern-light) 12%, transparent 12.5%, transparent 87%, var(--pattern-light) 87.5%, var(--pattern-light)),
+    linear-gradient(150deg, var(--pattern-light) 12%, transparent 12.5%, transparent 87%, var(--pattern-light) 87.5%, var(--pattern-light)),
+    linear-gradient(30deg, var(--pattern-light) 12%, transparent 12.5%, transparent 87%, var(--pattern-light) 87.5%, var(--pattern-light)),
+    linear-gradient(150deg, var(--pattern-light) 12%, transparent 12.5%, transparent 87%, var(--pattern-light) 87.5%, var(--pattern-light)),
+    linear-gradient(60deg, var(--pattern-dark) 25%, transparent 25.5%, transparent 75%, var(--pattern-dark) 75%, var(--pattern-dark)),
+    linear-gradient(60deg, var(--pattern-dark) 25%, transparent 25.5%, transparent 75%, var(--pattern-dark) 75%, var(--pattern-dark));
+  background-size: 80px 140px;
+  background-position: 0 0, 0 0, 40px 70px, 40px 70px, 0 0, 40px 70px;
+  opacity: 0.05;
+  z-index: -1;
+}
+
+/* Main Content */
+.main-content {
+  flex: 1;
+  width: 100%;
+  max-width: var(--container-max-width);
+  margin: 0 auto;
+  padding: calc(var(--header-height) + 2rem) 1.5rem 2rem;
+  position: relative;
+}
+
+/* Scrollbar Styling */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--background-light);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--primary-gold);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--secondary-green);
+}
+
+/* Typography */
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Amiri', serif;
+  color: var(--secondary-green);
+  margin-bottom: 1rem;
+}
+
+/* Links */
+a {
+  color: var(--accent-teal);
+  text-decoration: none;
+  transition: color var(--transition-fast);
+}
+
+a:hover {
+  color: var(--primary-gold);
+}
+
+/* Button Base Styles */
+.button {
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: var(--border-radius);
+  font-family: inherit;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all var(--transition-normal);
+  display: inline-flex;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  gap: 0.5rem;
 }
 
-.App-link {
-  color: #61dafb;
+.button-primary {
+  background-color: var(--primary-gold);
+  color: var(--text-light);
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+.button-secondary {
+  background-color: var(--secondary-green);
+  color: var(--text-light);
+}
+
+.button:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-medium);
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  :root {
+    --header-height: 60px;
   }
+  
+  .main-content {
+    padding: calc(var(--header-height) + 1rem) 1rem 1.5rem;
+  }
+}
+
+@media (max-width: 768px) {
+  body {
+    font-size: 14px;
+  }
+  
+  .main-content {
+    padding: calc(var(--header-height) + 0.5rem) 0.75rem 1rem;
+  }
+}
+
+/* Dark Mode Support */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background-light: #1A1F2C;
+    --text-dark: #E4E6EB;
+    --pattern-light: rgba(195, 163, 67, 0.05);
+    --pattern-dark: rgba(31, 79, 63, 0.05);
+  }
+  
+  .app-container::before {
+    opacity: 0.03;
+  }
+}
+
+/* Loading States */
+.loading {
+  opacity: 0.7;
+  pointer-events: none;
+  position: relative;
+}
+
+.loading::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 30px;
+  height: 30px;
+  border: 3px solid var(--primary-gold);
+  border-radius: 50%;
+  border-top-color: transparent;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
   to {
     transform: rotate(360deg);
   }

@@ -8,19 +8,23 @@ import Header from './Header/Header';
 import About from './About/About';
 
 function App() {
-  // change title
   useEffect(() => {
-    document.title = "Quranic Search";
+    document.title = "الباحث القرآني";
   }, [])
+  
   return (
     <Router>
-      <Header />
-      <Routes>
-        <Route path="/" exact element={<Home />} />
-        <Route path="/semantic-search/:searchInput" element={<SemanticSearchResult />} />
-        <Route path="/lexical-search/:searchInput" element={<LexicalSearchResult />} />
-        <Route path="/about" element={<About/>} />
-      </Routes>
+      <div className="app-container">
+        <Header />
+        <main className="main-content">
+          <Routes>
+            <Route path="/" exact element={<Home />} />
+            <Route path="/semantic-search/:searchInput" element={<SemanticSearchResult />} />
+            <Route path="/lexical-search/:searchInput" element={<LexicalSearchResult />} />
+            <Route path="/about" element={<About/>} /> عن المشروع
+          </Routes>
+        </main>
+      </div>
     </Router>
   );
 }

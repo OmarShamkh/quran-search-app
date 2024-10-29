@@ -1,45 +1,216 @@
-/* About.css */
-
 .about-container {
-    padding: 20px;
-  }
-  
-  .about-container h2 {
-    font-size: 24px;
-    margin-bottom: 10px;
-  }
-  
-  .about-container p {
-    font-size: 16px;
-    line-height: 1.6;
-  }
-  
-  .about-container ul {
-    list-style: disc;
-    margin-left: 20px;
-  }
-  
-  .about-container ul li {
-    margin-bottom: 5px;
-  }
-  
-  /* About.css */
+  max-width: var(--container-max-width);
+  margin: 0 auto;
+  padding: 2rem 1.5rem;
+  direction: rtl;
+}
 
-.contact-links {
-  list-style: none;
-  padding: 0;
+.about-header {
+  text-align: center;
+  margin-bottom: 3rem;
+  position: relative;
+}
+
+.about-header h1 {
+  color: var(--primary-green);
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+}
+
+.header-decoration {
+  width: 100px;
+  height: 4px;
+  background: var(--primary-green);
+  margin: 0 auto;
+  position: relative;
+}
+
+.header-decoration::before,
+.header-decoration::after {
+  content: '';
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  background: var(--primary-green);
+  border-radius: 50%;
+  top: -2px;
+}
+
+.header-decoration::before {
+  left: -4px;
+}
+
+.header-decoration::after {
+  right: -4px;
+}
+
+.about-content {
   display: flex;
-  gap: 10px;
+  flex-direction: column;
+  gap: 3rem;
 }
 
-.contact-links li a {
+.about-content section {
+  background: var(--background-light);
+  border-radius: var(--border-radius);
+  padding: 2rem;
+  box-shadow: var(--shadow-soft);
+}
+
+.about-content h2 {
+  color: var(--primary-green);
+  margin-bottom: 1.5rem;
+  font-size: 1.8rem;
+  position: relative;
+  padding-right: 1rem;
+}
+
+.about-content h2::before {
+  content: '';
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 4px;
+  height: 70%;
+  background: var(--primary-green);
+  border-radius: 2px;
+}
+
+.search-types {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+  margin-top: 1.5rem;
+}
+
+.search-type {
+  background: var(--pattern-light);
+  padding: 1.5rem;
+  border-radius: var(--border-radius);
+  transition: transform var(--transition-normal);
+}
+
+.search-type:hover {
+  transform: translateY(-5px);
+}
+
+.search-type h3 {
+  color: var(--primary-green);
+  margin-bottom: 0.5rem;
+}
+
+.features-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.features-list li {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem;
+  background: var(--pattern-light);
+  border-radius: var(--border-radius);
+  transition: transform var(--transition-normal);
+}
+
+.features-list li:hover {
+  transform: translateX(-5px);
+}
+
+.feature-icon {
+  font-size: 1.5rem;
+  min-width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--primary-green);
+  color: white;
+  border-radius: 50%;
+}
+
+.note-content {
+  background: var(--pattern-light);
+  padding: 1.5rem;
+  border-radius: var(--border-radius);
+  border-right: 4px solid var(--primary-green);
+}
+
+.university-info {
+  text-align: center;
+}
+
+.contact-section {
+  text-align: center;
+}
+
+.developer-name {
+  font-size: 1.2rem;
+  color: var(--text-dark);
+  margin-bottom: 1.5rem;
+}
+
+.social-links {
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.social-link {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  background: var(--pattern-light);
+  border-radius: var(--border-radius);
+  color: var(--text-dark);
   text-decoration: none;
-  color: #333;
-  background-color: #f2f2f2;
-  padding: 5px 10px;
-  border-radius: 5px;
+  transition: all var(--transition-normal);
 }
 
-.contact-links li a:hover {
-  background-color: #ddd;
+.social-link:hover {
+  transform: translateY(-3px);
+  background: var(--primary-green);
+  color: white;
+}
+
+.social-link .icon {
+  font-size: 1.2rem;
+}
+
+/* Dark Mode Adjustments */
+[data-theme='dark'] .about-content section {
+  background: var(--background-dark);
+}
+
+[data-theme='dark'] .search-type,
+[data-theme='dark'] .features-list li,
+[data-theme='dark'] .note-content,
+[data-theme='dark'] .social-link {
+  background: var(--background-dark);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .about-header h1 {
+    font-size: 2rem;
+  }
+
+  .about-content section {
+    padding: 1.5rem;
+  }
+
+  .social-links {
+    flex-direction: column;
+  }
+
+  .features-list li {
+    flex-direction: column;
+    text-align: center;
+  }
 }

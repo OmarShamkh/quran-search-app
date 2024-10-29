@@ -8,24 +8,27 @@ function SemanticSearchResult() {
   const [lexicalResults, setLexicalResults] = useState([]);
   const [error, setError] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
-  const resultsPerPage = 5; // Results to display per page
+  const [isLoading, setIsLoading] = useState(true);
+  const resultsPerPage = 5;
 
   useEffect(() => {
-    const fetchData = async () => {
+    const fetchSemanticData = async () => {
+      setIsLoading(true);
       try {
         const response = await fetch(`https://quran-semantic-api.icycliff-d2b823f1.eastus.azurecontainerapps.io/similar-verse/${searchInput}`);
+        console.log(response);
         if (!response.ok) {
-          throw new Error('Failed to fetch data');
+          throw new Error('Failed to fetch semantic data');
         }
         const data = await response.json();
         setSemanticResult(data.results);
       } catch (error) {
+        console.error('Error fetching semantic data:', error);
         setError('Error fetching semantic data');
       }
     };
 
-    fetchData();
-
+    fetchSemanticData();
   }, [searchInput]);
 
   useEffect(() => {
@@ -44,16 +47,19 @@ function SemanticSearchResult() {
                   throw new Error('Failed to fetch lexical data');
                 }
                 const data = await response.json();
-                return data;
+                return { ...data, similarity: item[0] };
               } catch (error) {
                 console.error('Error fetching lexical data:', error);
                 return null;
               }
             })
           );
+          console.log(results);
           setLexicalResults(results.filter((result) => result));
+          setIsLoading(false);
         } catch (error) {
           setError('Error fetching lexical data');
+          setIsLoading(false);
         }
       };
 
@@ -61,71 +67,117 @@ function SemanticSearchResult() {
     }
   }, [semanticResult, currentPage]);
 
-  const totalPages = Math.ceil(semanticResult?.length / resultsPerPage);
-
-  const handleNextPage = () => {
-    setCurrentPage((prevPage) => prevPage + 1);
-  };
-
-  const handlePrevPage = () => {
-    setCurrentPage((prevPage) => prevPage - 1);
-  };
-
-  const SemanticError = () => (
-    <div className="error-container">
-      <p>There was an error while fetching semantic data.</p>
+  const LoadingSpinner = () => (
+    <div className="loading-spinner">
+      <div className="spinner"></div>
+      <span>جاري البحث الدلالي...</span>
     </div>
   );
 
-  const LexicalError = () => (
+  const ErrorMessage = ({ message }) => (
     <div className="error-container">
-      <p>There was an error while fetching lexical data.</p>
+      <div className="error-icon">⚠️</div>
+      <h3>عذراً! حدث خطأ</h3>
+      <p>{message}</p>
     </div>
   );
 
-  if (error === 'Error fetching semantic data') {
-    return <SemanticError />;
-  }
+  const totalPages = semanticResult ? Math.ceil(semanticResult.length / resultsPerPage) : 0;
 
-  if (error === 'Error fetching lexical data') {
-    return <LexicalError />;
-  }
+  const handlePageChange = (pageNumber) => {
+    setCurrentPage(pageNumber);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const renderPagination = () => {
+    const pageNumbers = [];
+    for (let i = 1; i <= totalPages; i++) {
+      pageNumbers.push(
+        <button
+          key={i}
+          onClick={() => handlePageChange(i)}
+          className={`pagination-number ${currentPage === i ? 'active' : ''}`}
+        >
+          {i}
+        </button>
+      );
+    }
+    return pageNumbers;
+  };
+
+  if (isLoading) return <LoadingSpinner />;
+  if (error) return <ErrorMessage message={error === 'Error fetching semantic data' ? 
+    'حدث خطأ أثناء البحث الدلالي' : 'حدث خطأ أثناء جلب البيانات'} />;
 
   return (
-    <div>
-      {lexicalResults.length > 0 ? 
-      (
-        <div>
-          <div className="result-container">
-            <p>
-              نتائج البحث بمعنى : <span className="highlighted">{searchInput}</span> - عدد النتائج: {lexicalResults.length}
-            </p>
+    <div className="semantic-search-container">
+      {lexicalResults.length > 0 ? (
+        <div className="search-results">
+          <div className="search-header">
+            <h2>نتائج البحث الدلالي بالمعنى</h2>
+            <div className="results-summary">
+              <p>
+                البحث عن معنى: <span className="search-term">"{searchInput}"</span>
+              </p>
+              <p className="results-count">
+                عدد النتائج: <span>{semanticResult.length}</span>
+              </p>
+            </div>
+          </div>
+
+          <div className="results-list">
             {lexicalResults.map((result, index) => (
-              <div key={index} className="result-item">
-                <h4>السورة : {result.data.surah} </h4>
-                <p>{result.data.verse}</p>
-                {/* <p>Page: {result.page}</p> */}
-                <audio controls>
-                  <source src={result.data.audio} type="audio/mp3" />
-                  Your browser does not support the audio element.
-                </audio>
+              <div key={index} className="result-card">
+                <div className="result-header">
+                  <h3>سورة {result.data.surah}</h3>
+                  <div className="verse-info">
+                    <span className="verse-number">آية {result.data.verseNumber}</span>
+                    <span className="similarity-score">
+                      نسبة تطابق المعنى: {(result.similarity * 100).toFixed(1)}%
+                    </span>
+                  </div>
+                </div>
+                <div className="verse-text">
+                  <p>{result.data.verse}</p>
+                </div>
+                <div className="audio-player">
+                  <audio controls className="custom-audio">
+                    <source src={result.data.audio} type="audio/mp3" />
+                    متصفحك لا يدعم مشغل الصوت.
+                  </audio>
+                </div>
               </div>
             ))}
           </div>
-          <div className="pagination">
-          <button onClick={handleNextPage} disabled={currentPage === totalPages} className="pagination-btn">
-              التالي
-            </button>
-            <span className="pagination-text">{`الصفحة ${currentPage} من ${totalPages}`}</span>
-            <button onClick={handlePrevPage} disabled={currentPage === 1} className="pagination-btn">
-              السابق
-            </button>
-            
-            
-          </div>
+
+          {totalPages > 1 && (
+            <div className="pagination-container">
+              <button
+                onClick={() => handlePageChange(currentPage - 1)}
+                disabled={currentPage === 1}
+                className="pagination-arrow"
+              >
+                &#8594;
+              </button>
+              
+              <div className="pagination-numbers">
+                {renderPagination()}
+              </div>
+
+              <button
+                onClick={() => handlePageChange(currentPage + 1)}
+                disabled={currentPage === totalPages}
+                className="pagination-arrow"
+              >
+                &#8592;
+              </button>
+            </div>
+          )}
         </div>
       ) : (
-        <p>Loading...</p>
+        <div className="no-results">
+          <p>لا توجد نتائج بحث دلالي عن: <span className="search-term">"{searchInput}"</span></p>
+        </div>
       )}
     </div>
   );
