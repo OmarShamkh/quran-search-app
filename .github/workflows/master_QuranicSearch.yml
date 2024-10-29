@@ -1,7 +1,4 @@
-# Docs for the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
-# More GitHub Actions for Azure: https://github.com/Azure/actions
-
-name: Build and deploy container app to Azure Web App - QuranicSearch
+name: Build and deploy to Azure Web App - QuranicSearch
 
 on:
   push:
@@ -11,27 +8,28 @@ on:
 
 jobs:
   build:
-    runs-on: 'ubuntu-latest'
+    runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v4
 
-    - name: Set up Docker Buildx
-      uses: docker/setup-buildx-action@v2
-
-    - name: Log in to registry
-      uses: docker/login-action@v2
+    - name: Set up Node.js
+      uses: actions/setup-node@v4
       with:
-        registry: https://quran.azurecr.io/
-        username: ${{ secrets.AzureAppService_ContainerUsername_fe7ae59620fe4d4da542c229a9b71ca3 }}
-        password: ${{ secrets.AzureAppService_ContainerPassword_dc259d7a88d84f73bd93a843bff8af25 }}
+        node-version: '20.x'
+        cache: 'npm'
 
-    - name: Build and push container image to registry
-      uses: docker/build-push-action@v3
+    - name: Install dependencies
+      run: npm ci
+
+    - name: Build application
+      run: npm run build
+
+    - name: Upload artifact for deployment job
+      uses: actions/upload-artifact@v4
       with:
-        push: true
-        tags: quran.azurecr.io/${{ secrets.AzureAppService_ContainerUsername_fe7ae59620fe4d4da542c229a9b71ca3 }}/quran-app:${{ github.sha }}
-        file: ./Dockerfile
+        name: node-app
+        path: build/
 
   deploy:
     runs-on: ubuntu-latest
@@ -41,11 +39,16 @@ jobs:
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
 
     steps:
+    - name: Download artifact from build job
+      uses: actions/download-artifact@v4
+      with:
+        name: node-app
+
     - name: Deploy to Azure Web App
       id: deploy-to-webapp
-      uses: azure/webapps-deploy@v2
+      uses: azure/webapps-deploy@v3
       with:
         app-name: 'QuranicSearch'
         slot-name: 'production'
         publish-profile: ${{ secrets.AzureAppService_PublishProfile_884df1cf362c4957b71520e0c0f5d518 }}
-        images: 'quran.azurecr.io/${{ secrets.AzureAppService_ContainerUsername_fe7ae59620fe4d4da542c229a9b71ca3 }}/quran-app:${{ github.sha }}'
+        package: .
