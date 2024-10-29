@@ -8,7 +8,7 @@ on:
 
 jobs:
   build-and-deploy:
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
     
     steps:
     - name: Checkout repository
@@ -26,26 +26,91 @@ jobs:
     - name: Build application
       run: npm run build
 
-    - name: Zip the build directory
+    - name: Add web.config
+      shell: powershell
+      run: |
+        $webConfig = @"
+        <?xml version="1.0"?>
+        <configuration>
+          <system.webServer>
+            <rewrite>
+              <rules>
+                <rule name="React Routes" stopProcessing="true">
+                  <match url=".*" />
+                  <conditions logicalGrouping="MatchAll">
+                    <add input="{REQUEST_FILENAME}" matchType="IsFile" negate="true" />
+                    <add input="{REQUEST_FILENAME}" matchType="IsDirectory" negate="true" />
+                  </conditions>
+                  <action type="Rewrite" url="/" />
+                </rule>
+              </rules>
+            </rewrite>
+            <handlers>
+              <add name="iisnode" path="server.js" verb="*" modules="iisnode" />
+            </handlers>
+            <staticContent>
+              <mimeMap fileExtension=".json" mimeType="application/json" />
+            </staticContent>
+          </system.webServer>
+        </configuration>
+        "@
+        Set-Content -Path "./build/web.config" -Value $webConfig
+
+    - name: Add server.js for static serving
+      shell: powershell
+      run: |
+        $serverJs = @"
+        const express = require('express');
+        const path = require('path');
+        const app = express();
+
+        app.use(express.static(path.join(__dirname)));
+
+        app.get('*', (req, res) => {
+          res.sendFile(path.join(__dirname, 'index.html'));
+        });
+
+        const port = process.env.PORT || 8080;
+        app.listen(port, () => {
+          console.log('Server is running on port ' + port);
+        });
+        "@
+        Set-Content -Path "./build/server.js" -Value $serverJs
+
+    - name: Add package.json for production
+      shell: powershell
+      run: |
+        $packageJson = @"
+        {
+          "name": "quranicsearch",
+          "version": "1.0.0",
+          "private": true,
+          "dependencies": {
+            "express": "^4.17.1"
+          },
+          "scripts": {
+            "start": "node server.js"
+          }
+        }
+        "@
+        Set-Content -Path "./build/package.json" -Value $packageJson
+
+    - name: Install production dependencies
       run: |
         cd build
-        zip -r ../build.zip .
-      
+        npm install --production
+
     - name: Deploy to Azure Web App
       uses: azure/webapps-deploy@v2
       with:
         app-name: 'QuranicSearch'
         slot-name: 'production'
-        publish-profile: ${{ secrets.AzureAppService_PublishProfile_8cbe7695efad42adb7eba7e2245ed165 }}
-        package: './build.zip'
-        clean: true
+        publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
+        package: ./build
 
-    - name: Post-deployment status
+    - name: Post-deployment cleanup
       if: always()
       run: |
-        if [ "${{ job.status }}" == "success" ]; then
-          echo "✅ Deployment successful"
-        else
-          echo "❌ Deployment failed"
-          echo "For detailed logs, check Azure Portal > QuranicSearch > Deployment Center"
-        fi
+        if ($env:RUNNER_OS -eq "Windows") {
+          Remove-Item -Path "./build" -Recurse -Force -ErrorAction SilentlyContinue
+        }
