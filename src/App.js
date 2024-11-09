@@ -13,7 +13,7 @@ function App() {
   }, [])
   
   return (
-    <Router>
+    <Router basename="/quran-search-app">
       <div className="app-container">
         <Header />
         <main className="main-content">
