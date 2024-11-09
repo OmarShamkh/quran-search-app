@@ -1,0 +1,49 @@
+<svg width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Outer Frame -->
+  <rect width="512" height="512" rx="64" fill="#124734"/>
+  
+  <!-- Dome Shape -->
+  <path d="M256 80C180 80 120 110 120 150V400H392V150C392 110 332 80 256 80Z" fill="#247A4C"/>
+  
+  <!-- Book Base -->
+  <path d="M140 150H372V380H140V150Z" fill="#E8F3DB"/>
+  
+  <!-- Rihaal (Book Stand) -->
+  <path d="
+    M160 360
+    L140 400
+    H372
+    L352 360
+    H160Z" fill="#124734"/>
+  
+  <!-- Pages Effect -->
+  <path d="
+    M160 150
+    C160 150, 256 180, 352 150
+    V360
+    C352 360, 256 390, 160 360
+    V150Z" fill="#FFFFFF"/>
+  
+  <!-- Arabic Text Decoration (Stylized) -->
+  <path d="
+    M200 200
+    C200 200, 256 220, 312 200
+    M200 250
+    C200 250, 256 270, 312 250
+    M200 300
+    C200 300, 256 320, 312 300
+  " stroke="#124734" stroke-width="8" stroke-linecap="round"/>
+  
+  <!-- Decorative Border -->
+  <rect x="140" y="150" width="232" height="230" stroke="#124734" stroke-width="4" fill="none"/>
+  
+  <!-- Islamic Ornamental Details -->
+  <circle cx="256" cy="180" r="12" fill="#124734"/>
+  <circle cx="256" cy="330" r="12" fill="#124734"/>
+  
+  <!-- Additional Ornamental Details -->
+  <path d="
+    M170 170L190 170M322 170L342 170
+    M170 360L190 360M322 360L342 360
+  " stroke="#124734" stroke-width="4" stroke-linecap="round"/>
+</svg>
