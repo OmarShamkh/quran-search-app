@@ -3,7 +3,7 @@
 This web application facilitates Quran searches using both lexical (keyword-based) and semantic (concept-based) search techniques. It's designed to help users, especially Muslims, navigate and search the Holy Quran more efficiently.
 
 ## Website: 
-https://quranicsearch.azurewebsites.net/
+https://omarshamkh.github.io/quran-search-app/
 
 ## Features
 
