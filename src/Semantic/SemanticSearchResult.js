@@ -15,16 +15,13 @@ function SemanticSearchResult() {
     const fetchSemanticData = async () => {
       setIsLoading(true);
       try {
-        const response = await fetch(`https://quran-semantic-api.icycliff-d2b823f1.eastus.azurecontainerapps.io/similar-verse/${searchInput}`);
-        console.log(response);
-        if (!response.ok) {
-          throw new Error('Failed to fetch semantic data');
-        }
-        const data = await response.json();
-        setSemanticResult(data.results);
+        setError('عذراً. خدمة البحث الدلالي غير متوفرة حالياً بسبب عدم توفر الموارد اللازمة لتشغيل الخادم. نعمل على إصلاح المشكلة.');
+        setIsLoading(false);
+        
       } catch (error) {
         console.error('Error fetching semantic data:', error);
-        setError('Error fetching semantic data');
+        setError('عذراً. خدمة البحث الدلالي غير متوفرة حالياً. نعمل على إصلاح المشكلة.');
+        setIsLoading(false);
       }
     };
 
@@ -106,8 +103,7 @@ function SemanticSearchResult() {
   };
 
   if (isLoading) return <LoadingSpinner />;
-  if (error) return <ErrorMessage message={error === 'Error fetching semantic data' ? 
-    'حدث خطأ أثناء البحث الدلالي' : 'حدث خطأ أثناء جلب البيانات'} />;
+  if (error) return <ErrorMessage message={error} />;
 
   return (
     <div className="semantic-search-container">
