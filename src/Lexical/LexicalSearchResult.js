@@ -16,7 +16,7 @@ function LexicalSearchResult() {
       try {
         // Encode the search input to handle special characters
         const encodedSearchInput = encodeURIComponent(searchInput);
-        const response = await fetch(`http://localhost:3002/search?text=${encodedSearchInput}`);
+        const response = await fetch(`https://quran-lexical-api.vercel.app/search?text=${encodedSearchInput}`);
         
         if (!response.ok) {
           throw new Error('Failed to fetch data');
